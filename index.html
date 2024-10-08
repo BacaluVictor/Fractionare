@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Regimuri de fractionare</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Regimuri de fractionare</h1>
+  
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Caută o tumoră..." onkeyup="searchTumor()">
+  </div>
+  
+  <div id="breadcrumb"></div>
+  
+  <div id="content">
+    <!-- Conținutul paginii va fi afișat aici -->
+  </div>
+
+  <!-- Modal pentru algoritmul terapeutic -->
+  <div id="algModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2 id="algModalTitle">Algoritm Terapeutic</h2>
+      <div id="algModalContent"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
