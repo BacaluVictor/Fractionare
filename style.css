@@ -1,0 +1,123 @@
+body { 
+  font-family: Arial, sans-serif; 
+  max-width: 1200px; 
+  margin: 0 auto; 
+  padding: 20px;
+  background-color: #ffffff;
+  color: #333333;
+}
+h1, h2 { color: #2c3e50; }
+.tumor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+.tumor-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  transition: all 0.3s ease;
+  background-color: #fdfdfd;
+  position: relative;
+}
+.tumor-card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+.tumor-details {
+  display: none;
+  margin-top: 15px;
+}
+.tumor-card.expanded .tumor-details {
+  display: block;
+}
+.search-bar { margin: 20px 0; }
+.search-bar input { 
+  width: 100%; 
+  padding: 10px; 
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+#breadcrumb { margin-bottom: 20px; }
+#breadcrumb a { 
+  color: #2980b9; 
+  margin-right: 5px;
+  text-decoration: none;
+}
+#breadcrumb a:hover { text-decoration: underline; }
+/* Stiluri pentru indicatorul de extindere */
+.toggle-indicator {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  color: #2980b9;
+}
+/* Stiluri pentru butonul de deschidere a modalului */
+.alg-button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #2980b9;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.alg-button:hover {
+  background-color: #1f6391;
+}
+/* Stiluri pentru modal */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5); 
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; 
+  padding: 20px;
+  border: 1px solid #888;
+  width: 90%; 
+  max-width: 600px;
+  border-radius: 8px;
+  position: relative;
+}
+.close {
+  color: #aaa;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.close:hover {
+  color: #000;
+}
+/* Stiluri pentru tipurile de radioterapie */
+.tip-radioterapie {
+  font-weight: bold;
+}
+.tip-radioterapie span {
+  margin-right: 5px;
+}
+.adjuvanta {
+  color: #2ecc71; /* Verde */
+}
+.definitiva {
+  color: #e74c3c; /* Roșu */
+}
+.neoadjuvanta {
+  color: #e67e22; /* Portocaliu */
+}
+/* Stil pentru tumorile benigne */
+.benign-tumor-card {
+  background-color: #f0f0f0;
+}
