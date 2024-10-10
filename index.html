@@ -2,18 +2,23 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
-  <title>Regimuri de fractionare</title>
+  <title>Regimuri de Fractionare și Joc de Asociere</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Regimuri de fractionare</h1>
-  
-  <div class="search-bar">
+  <h1>Regimuri de Fractionare și Joc de Asociere</h1>
+
+  <div class="navigation">
+    <a href="#" onclick="goHome()">Acasă</a>
+    <a href="#" onclick="showMatchingGame()">Joc de Asociere</a>
+  </div>
+
+  <div class="search-bar" id="search-bar">
     <input type="text" id="searchInput" placeholder="Caută o tumoră..." onkeyup="searchTumor()">
   </div>
-  
+
   <div id="breadcrumb"></div>
-  
+
   <div id="content">
     <!-- Conținutul paginii va fi afișat aici -->
   </div>
@@ -27,6 +32,7 @@
     </div>
   </div>
 
+  <!-- Scripturile JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
