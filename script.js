@@ -23,7 +23,7 @@ const tumorData = {
       name: "Meningiom grad I",
       doza: "50-54 Gy",
       fractionare: "27-30 fracții, fx=1.8-2 Gy",
-      tipRadioterapie: "Adjuvantă sau definitivă",
+      tipRadioterapie: "Adjuvantă",
       volume: "GTV = tumoră reziduală; CTV = GTV + 1-2 cm (respectând barierele anatomice); PTV = CTV + 0.3-0.5 cm",
       algoritm: "1. Observație pentru tumori mici asimptomatice.<br>2. Rezecție chirurgicală.<br>3. Radioterapie pentru tumori inoperabile sau rezecție incompletă.",
       benign: true
@@ -32,7 +32,7 @@ const tumorData = {
       name: "Meningiom grad II",
       doza: "54-60 Gy",
       fractionare: "30-33 fracții, fx=1.8-2 Gy",
-      tipRadioterapie: "Adjuvantă sau definitivă",
+      tipRadioterapie: "Adjuvantă",
       volume: "GTV = tumoră reziduală; CTV = GTV + 1-2 cm; PTV = CTV + 0.3-0.5 cm",
       algoritm: "1. Rezecție chirurgicală urmată de radioterapie adjuvantă.",
       benign: false
@@ -41,7 +41,7 @@ const tumorData = {
       name: "Meningiom grad III",
       doza: "60 Gy",
       fractionare: "30 fracții, fx=2 Gy",
-      tipRadioterapie: "Adjuvantă sau definitivă",
+      tipRadioterapie: "Adjuvantă",
       volume: "GTV = tumoră reziduală; CTV = GTV + 1-2 cm; PTV = CTV + 0.3-0.5 cm",
       algoritm: "1. Rezecție chirurgicală urmată de radioterapie adjuvantă.",
       benign: false
@@ -50,7 +50,7 @@ const tumorData = {
       name: "Tumori cu celule germinale intracraniene (Germinom)",
       doza: "24 Gy (CSI) + boost până la 40-45 Gy",
       fractionare: "16 fracții (CSI), fx=1.5 Gy + boost",
-      tipRadioterapie: "Neoadjuvantă (opțional), definitivă",
+      tipRadioterapie: "adjuvantă",
       volume: "GTV = Tumora; CTV = Tumora + 1-2 cm margine; PTV = CTV + 0.3-0.5 cm",
       algoritm: "1. Chimioterapie neoadjuvantă (opțional).<br>2. Radioterapie craniospinală (CSI) + boost tumoral.",
       benign: false
@@ -77,7 +77,7 @@ const tumorData = {
       name: "Gliom de grad scăzut (LGG)",
       doza: "50.4-54 Gy",
       fractionare: "28-30 fracții, fx=1.8 Gy",
-      tipRadioterapie: "Postoperatorie, definitivă pentru pacienți cu risc",
+      tipRadioterapie: "adjuvantă",
       volume: "GTV = leziune T2/FLAIR + cavitate postoperatorie; CTV = GTV + 1-2 cm; PTV = CTV + 0.3-0.5 cm",
       algoritm: "1. Rezecție chirurgicală maximală.<br>2. Evaluare factori de risc.<br>3. Radioterapie postoperatorie ± chimioterapie adjuvantă (PCV sau Temozolomidă) pentru pacienți cu factori de risc.",
       benign: false
@@ -122,7 +122,7 @@ const tumorData = {
       name: "Tumori spinale benigne",
       doza: "45-50.4 Gy",
       fractionare: "25-28 fracții, fx=1.8 Gy",
-      tipRadioterapie: "Adjuvantă sau definitivă",
+      tipRadioterapie: "Adjuvantă sau definitivă pt inoperabile",
       volume: "GTV = Tumora vizibilă + edem (T1 + T2); CTV = GTV + 1-2 cm cranio-caudal; PTV = CTV + 0.3-0.5 cm",
       algoritm: "1. Rezecție chirurgicală maximală.<br>2. Radioterapie adjuvantă pentru tumori incomplet rezecate.",
       benign: true
@@ -149,13 +149,14 @@ const tumorData = {
       name: "Malformație arterio-venoasă (MAV)",
       doza: "16-20 Gy",
       fractionare: "1 fracție (SRS) sau 3 fracții, fx=8-9 Gy",
-      tipRadioterapie: "Definitivă, pentru MAV < 3 cm sau reziduuri post-chirurgicale",
+      tipRadioterapie: "Definitivă, pentru MAV < 3 cm sau Adjuvantă pentru reziduuri post-chirurgicale",
       volume: "GTV = Nidusul MAV; CTV = Nidus + 5 mm; PTV = CTV + 2-3 mm",
       algoritm: "1. Observație pentru MAV mici asimptomatice.<br>2. Embolizare endovasculară.<br>3. Rezecție microchirurgicală.<br>4. Radiochirurgie stereotactică pentru MAV < 3 cm sau reziduale.",
       benign: true
     }
+    // Poți adăuga mai multe tumori și regiuni aici
   ],
-  // Poți adăuga date pentru alte regiuni aici
+  // Alte regiuni anatomice pot fi adăugate aici
 };
 
 let currentPath = [];
@@ -166,10 +167,12 @@ function removeDiacritics(str) {
 
 function showTumors(region) {
   const contentDiv = document.getElementById('content');
-  
+  const searchBar = document.getElementById('search-bar');
+  searchBar.style.display = 'block';
+
   currentPath = [{ name: 'Acasă', action: 'goHome()' }, { name: region.charAt(0).toUpperCase() + region.slice(1) }];
   updateBreadcrumb();
-  
+
   if (tumorData[region]) {
     let tumorGrid = `<h2>Tumori în regiunea: ${region.charAt(0).toUpperCase() + region.slice(1)}</h2><div class="tumor-grid">`;
     tumorData[region].forEach(function(tumor) {
@@ -208,7 +211,7 @@ function toggleTumor(event, element) {
 function searchTumor() {
   const searchInput = removeDiacritics(document.getElementById('searchInput').value.trim());
   const contentDiv = document.getElementById('content');
-  
+
   currentPath = [{ name: 'Acasă', action: 'goHome()' }, { name: 'Căutare' }];
   updateBreadcrumb();
 
@@ -273,6 +276,9 @@ function updateBreadcrumb() {
 
 function goHome() {
   const contentDiv = document.getElementById('content');
+  const searchBar = document.getElementById('search-bar');
+  searchBar.style.display = 'block';
+
   currentPath = [];
   updateBreadcrumb();
   contentDiv.innerHTML = `
@@ -350,6 +356,177 @@ function getRadiotherapyCssClass(tip) {
   } else {
     return '';
   }
+}
+
+// Funcții pentru Jocul de Asociere
+function showMatchingGame() {
+  const contentDiv = document.getElementById('content');
+  const searchBar = document.getElementById('search-bar');
+  searchBar.style.display = 'none';
+
+  currentPath = [{ name: 'Acasă', action: 'goHome()' }, { name: 'Joc de Asociere' }];
+  updateBreadcrumb();
+
+  contentDiv.innerHTML = `
+    <h2>Joc de Asociere - Doze și Tumori</h2>
+    <div id="game-container"></div>
+    <button id="check-button" onclick="checkAnswers()">Verifică Răspunsurile</button>
+    <button id="reset-button" onclick="resetGame()">Resetează Jocul</button>
+    <div id="result"></div>
+  `;
+
+  initGame();
+}
+
+const tumorsForGame = [
+  // Listează tumorile și dozele pentru joc
+  { name: "Adenom hipofizar", dose: "45-50.4 Gy (EBRT) sau 14-18 Gy (SRS)" },
+  { name: "Craniofaringiom", dose: "50.4-54 Gy" },
+  { name: "Meningiom grad I", dose: "50-54 Gy" },
+  { name: "Meningiom grad II", dose: "54-60 Gy" },
+  { name: "Meningiom grad III", dose: "60 Gy" },
+  { name: "Gliom de grad înalt (GBM)", dose: "60 Gy" },
+  { name: "Gliom de grad scăzut (LGG)", dose: "50.4-54 Gy" },
+  { name: "Meduloblastom risc standard", dose: "23.4 Gy (CSI) + boost până la 54 Gy" },
+  { name: "Meduloblastom risc crescut", dose: "36 Gy (CSI) + boost până la 54-55.8 Gy" },
+  { name: "Ependimom spinal", dose: "45-50.4 Gy" },
+  { name: "Schwanom vestibular (Neurinom acustic)", dose: "12-13 Gy (SRS) sau 50.4 Gy (FSRT)" },
+  { name: "Nevralgia de trigemen", dose: "70-90 Gy" },
+  { name: "Malformație arterio-venoasă (MAV)", dose: "16-20 Gy" }
+  // Adaugă mai multe tumori după nevoie
+];
+
+let shuffledTumors = [];
+let shuffledDoses = [];
+
+function shuffle(array) {
+  return array.sort(() => Math.random() - 0.5);
+}
+
+function initGame() {
+  shuffledTumors = shuffle([...tumorsForGame]);
+  shuffledDoses = shuffle([...tumorsForGame]);
+
+  const tumorList = document.createElement('ul');
+  tumorList.className = 'list';
+  shuffledTumors.forEach((tumor, index) => {
+    const li = document.createElement('li');
+    li.textContent = tumor.name;
+    li.draggable = true;
+    li.dataset.tumorIndex = index;
+    li.addEventListener('dragstart', handleDragStart);
+    li.addEventListener('dragend', handleDragEnd);
+    tumorList.appendChild(li);
+  });
+
+  const doseList = document.createElement('ul');
+  doseList.className = 'list';
+  shuffledDoses.forEach((tumor, index) => {
+    const li = document.createElement('li');
+    li.textContent = tumor.dose;
+    li.draggable = true;
+    li.dataset.doseIndex = index;
+    li.addEventListener('dragstart', handleDragStart);
+    li.addEventListener('dragend', handleDragEnd);
+    doseList.appendChild(li);
+  });
+
+  const gameContainer = document.getElementById('game-container');
+  gameContainer.innerHTML = '';
+
+  const tumorColumn = document.createElement('div');
+  tumorColumn.className = 'column';
+  tumorColumn.innerHTML = '<h2>Tumori</h2>';
+  tumorColumn.appendChild(tumorList);
+
+  const doseColumn = document.createElement('div');
+  doseColumn.className = 'column';
+  doseColumn.innerHTML = '<h2>Doze</h2>';
+  doseColumn.appendChild(doseList);
+
+  gameContainer.appendChild(tumorColumn);
+  gameContainer.appendChild(doseColumn);
+
+  // Evenimente pentru drag and drop
+  const allItems = document.querySelectorAll('.list li');
+  allItems.forEach(item => {
+    item.addEventListener('dragover', handleDragOver);
+    item.addEventListener('drop', handleDrop);
+  });
+}
+
+let draggedItem = null;
+
+function handleDragStart(event) {
+  draggedItem = event.target;
+  event.target.classList.add('dragging');
+  event.dataTransfer.effectAllowed = 'move';
+}
+
+function handleDragEnd(event) {
+  event.target.classList.remove('dragging');
+}
+
+function handleDragOver(event) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = 'move';
+
+  const draggingItem = document.querySelector('.dragging');
+  if (event.target && event.target.nodeName === 'LI' && event.target !== draggingItem) {
+    const list = event.target.parentNode;
+    const nodes = Array.from(list.children);
+    const indexA = nodes.indexOf(draggingItem);
+    const indexB = nodes.indexOf(event.target);
+    if (indexA < indexB) {
+      list.insertBefore(draggingItem, event.target.nextSibling);
+    } else {
+      list.insertBefore(draggingItem, event.target);
+    }
+  }
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+}
+
+function checkAnswers() {
+  const tumorItems = document.querySelectorAll('.column:nth-child(1) .list li');
+  const doseItems = document.querySelectorAll('.column:nth-child(2) .list li');
+
+  let correct = 0;
+
+  tumorItems.forEach((tumorItem, index) => {
+    const tumorIndex = tumorItem.dataset.tumorIndex;
+    const doseIndex = doseItems[index].dataset.doseIndex;
+
+    if (shuffledTumors[tumorIndex].dose === shuffledDoses[doseIndex].dose) {
+      correct++;
+      tumorItem.classList.add('correct');
+      doseItems[index].classList.add('correct');
+    } else {
+      tumorItem.classList.add('incorrect');
+      doseItems[index].classList.add('incorrect');
+    }
+  });
+
+  const resultDiv = document.getElementById('result');
+  resultDiv.textContent = `Ai obținut ${correct} din ${tumorItems.length} corecte.`;
+
+  // Deactivează funcționalitatea de drag-and-drop după verificare
+  const allItems = document.querySelectorAll('.list li');
+  allItems.forEach(item => {
+    item.draggable = false;
+    item.removeEventListener('dragstart', handleDragStart);
+    item.removeEventListener('dragend', handleDragEnd);
+    item.removeEventListener('dragover', handleDragOver);
+    item.removeEventListener('drop', handleDrop);
+  });
+}
+
+function resetGame() {
+  const resultDiv = document.getElementById('result');
+  resultDiv.textContent = '';
+  showMatchingGame();
 }
 
 // Inițializează aplicația
